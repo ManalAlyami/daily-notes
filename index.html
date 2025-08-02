@@ -97,9 +97,7 @@
     <form id="loginForm">
       <input type="text" id="username" placeholder="اسم المستخدم" required />
       <input type="password" id="password" placeholder="كلمة المرور" required />
-      <button type="submit">
-        دخول
-      </button>
+      <button type="submit">دخول</button>
       <div id="errorMsg" class="error"></div>
     </form>
     <div class="forgot-password">
@@ -121,8 +119,8 @@
       const validPass = '12345';
 
       if (username === validUser && password === validPass) {
-        errorMsg.textContent = '';
-        window.location.href = 'main.html';  // توجه لصفحة المهام بعد تسجيل الدخول
+        errorMsg.textContent = ''; // حذف رسالة الخطأ إن وُجدت
+        window.location.href = 'main.html';
       } else {
         errorMsg.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة';
       }
