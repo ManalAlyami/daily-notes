@@ -37,42 +37,24 @@
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s;
       position: relative;
-      cursor: pointer;
-      user-select: none;
     }
 
-    .task-box.done {
-      text-decoration: line-through;
-      opacity: 0.6;
+    .task-box:hover {
+      transform: translateY(-5px);
     }
 
     .task-title {
       font-size: 20px;
       font-weight: bold;
       color: #1d3557;
-      margin-bottom: 0;
-      display: inline-block;
+      margin-bottom: 6px;
     }
 
-    .task-actions {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .task-actions button {
-      background: transparent;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      color: #264653;
-      transition: color 0.3s ease;
-    }
-
-    .task-actions button:hover {
-      color: #f4a261;
+    .task-date {
+      font-size: 12px;
+      color: #888;
+      font-family: 'Tajawal', sans-serif;
+      text-align: left;
     }
 
     .add-btn {
@@ -84,92 +66,13 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      margin: 30px auto;
+      margin: 30px auto 50px;
       display: block;
       transition: background 0.3s ease;
+      width: 180px;
     }
 
     .add-btn:hover {
-      background: linear-gradient(90deg, #f4a261, #ffd166);
-    }
-
-    /* تقويم */
-    .calendar {
-      margin: 40px auto;
-      max-width: 500px;
-      background-color: #fff;
-      border-radius: 15px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-    }
-
-    .calendar h3 {
-      margin-top: 0;
-      color: #1d3557;
-      text-align: center;
-    }
-
-    .calendar input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-family: 'Tajawal', sans-serif;
-    }
-
-    /* النافذة المنبثقة */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .modal-content h3 {
-      margin-top: 0;
-      color: #1d3557;
-      text-align: center;
-    }
-
-    .modal-content input {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-      font-family: 'Tajawal', sans-serif;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-
-    .modal-content button {
-      background: linear-gradient(90deg, #ffd166, #f4a261);
-      border: none;
-      padding: 10px 15px;
-      border-radius: 10px;
-      font-weight: bold;
-      color: #264653;
-      cursor: pointer;
-      width: 100%;
-      font-size: 16px;
-    }
-
-    .modal-content button:hover {
       background: linear-gradient(90deg, #f4a261, #ffd166);
     }
   </style>
@@ -177,92 +80,66 @@
 <body>
   <header>مهامي اليومية</header>
 
-  <div class="container" id="taskContainer">
-    <!-- مهام تظهر هنا -->
-  </div>
+  <div class="container"></div>
 
-  <button class="add-btn" id="openModalBtn">إضافة مهمة جديدة</button>
-
-  <div class="calendar">
-    <h3>تقويم المهام</h3>
-    <input type="date" />
-  </div>
-
-  <!-- النافذة المنبثقة -->
-  <div class="modal" id="taskModal">
-    <div class="modal-content">
-      <h3>أضف مهمة جديدة</h3>
-      <input type="text" id="taskTitle" placeholder="عنوان المهمة" />
-      <button id="addTaskBtn">إضافة</button>
-    </div>
-  </div>
+  <button class="add-btn">إضافة مهمة جديدة</button>
 
   <script>
-    const openModalBtn = document.getElementById('openModalBtn');
-    const modal = document.getElementById('taskModal');
-    const addTaskBtn = document.getElementById('addTaskBtn');
-    const taskContainer = document.getElementById('taskContainer');
-    const taskTitleInput = document.getElementById('taskTitle');
+    const container = document.querySelector('.container');
+    const addBtn = document.querySelector('.add-btn');
 
-    // فتح وإغلاق النافذة المنبثقة
-    openModalBtn.addEventListener('click', () => {
-      modal.style.display = 'flex';
-      taskTitleInput.value = '';
-      taskTitleInput.focus();
-    });
+    addBtn.addEventListener('click', function () {
+      const taskTitle = prompt("اكتبي عنوان المهمة:");
+      const taskDateInput = prompt("اكتبي تاريخ ووقت المهمة بصيغة: YYYY-MM-DD HH:MM");
 
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-      }
-    });
-
-    // إضافة مهمة جديدة
-    addTaskBtn.addEventListener('click', () => {
-      const title = taskTitleInput.value.trim();
-      if (!title) {
-        alert('يرجى إدخال عنوان المهمة');
+      if (!taskTitle || !taskDateInput) {
+        alert("يجب إدخال عنوان المهمة والتاريخ مع الوقت");
         return;
       }
 
+      // تحويل النص إلى تاريخ JS
+      const taskDate = new Date(taskDateInput.replace(' ', 'T'));
+      if (isNaN(taskDate)) {
+        alert('صيغة التاريخ غير صحيحة. استخدمي الصيغة: YYYY-MM-DD HH:MM');
+        return;
+      }
+
+      // إنشاء مهمة جديدة
       const taskBox = document.createElement('div');
-      taskBox.classList.add('task-box');
+      taskBox.className = 'task-box';
 
-      const taskTitle = document.createElement('div');
-      taskTitle.classList.add('task-title');
-      taskTitle.textContent = title;
+      const titleEl = document.createElement('div');
+      titleEl.className = 'task-title';
+      titleEl.textContent = taskTitle;
 
-      // أزرار الإجراءات
-      const actionsDiv = document.createElement('div');
-      actionsDiv.classList.add('task-actions');
-
-      // زر صح
-      const doneBtn = document.createElement('button');
-      doneBtn.innerHTML = '✔️';
-      doneBtn.title = 'إنهاء المهمة';
-      doneBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        taskBox.classList.toggle('done');
+      const dateEl = document.createElement('div');
+      dateEl.className = 'task-date';
+      dateEl.textContent = taskDate.toLocaleString('ar-SA', {
+        year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
       });
 
-      // زر حذف
-      const deleteBtn = document.createElement('button');
-      deleteBtn.innerHTML = '🗑️';
-      deleteBtn.title = 'حذف المهمة';
-      deleteBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        taskContainer.removeChild(taskBox);
-      });
+      taskBox.appendChild(titleEl);
+      taskBox.appendChild(dateEl);
 
-      actionsDiv.appendChild(doneBtn);
-      actionsDiv.appendChild(deleteBtn);
+      container.appendChild(taskBox);
 
-      taskBox.appendChild(taskTitle);
-      taskBox.appendChild(actionsDiv);
+      // طلب إذن الإشعارات إن لم يُعطى بعد
+      if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+      }
 
-      taskContainer.appendChild(taskBox);
-
-      modal.style.display = 'none';
+      // مؤقت التذكير
+      const intervalId = setInterval(() => {
+        const now = new Date();
+        const diff = taskDate - now;
+        if (diff <= 0) {
+          if (Notification.permission === "granted") {
+            new Notification("📌 تذكير بمهمتك:", { body: taskTitle });
+          }
+          clearInterval(intervalId);
+        }
+      }, 60000);
     });
   </script>
 </body>
