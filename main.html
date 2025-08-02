@@ -1,404 +1,88 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>مهامي اليومية - مذاكرت منال</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
-      background: linear-gradient(135deg, #a8dadc, #f1faee);
-      font-family: 'Tajawal', sans-serif;
-      color: #1d3557;
-      margin: 0;
-      padding: 25px 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
+      background-color: #f0faff;
+      font-family: 'Arial', sans-serif;
+      padding: 40px;
       direction: rtl;
-      user-select: none;
+      text-align: center;
     }
 
     h1 {
-      font-size: 2.4rem;
-      font-weight: 700;
-      margin-bottom: 15px;
-      text-align: center;
-      color: #264653;
-      user-select: none;
+      color: #333;
+      font-weight: bold;
+      margin-bottom: 20px;
     }
 
-    .input-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-      margin-bottom: 25px;
-      width: 100%;
-      max-width: 650px;
-    }
-
-    #noteText, #noteDate {
-      padding: 12px 14px;
+    input {
+      padding: 10px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin: 10px 0;
       font-size: 16px;
-      border-radius: 10px;
-      border: 1.5px solid #a8dadc;
-      transition: border-color 0.3s;
-      box-shadow: 0 0 5px #a8dadc44;
-    }
-
-    #noteText:focus, #noteDate:focus {
-      border-color: #ffd166;
-      box-shadow: 0 0 8px #ffd166aa;
-      outline: none;
-    }
-
-    #noteText {
-      flex: 1 1 280px;
-      text-align: right;
-      color: #264653;
-      background-color: #ffffffcc;
-    }
-
-    #noteDate {
-      flex: 1 1 200px;
-      color: #264653;
-      background-color: #ffffffcc;
     }
 
     button {
-      background: linear-gradient(90deg, #ffd166, #f4a261);
+      background-color: #ffd700;
+      color: #000;
+      font-weight: bold;
       border: none;
-      border-radius: 10px;
-      padding: 12px 22px;
-      font-size: 16px;
-      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 8px;
       cursor: pointer;
-      color: #264653;
-      box-shadow: 0 4px 10px rgba(244, 162, 97, 0.5);
-      transition: background-color 0.3s ease, transform 0.15s ease;
-      user-select: none;
-      flex: 0 0 auto;
+      transition: background-color 0.3s;
+      font-size: 16px;
     }
 
     button:hover {
-      background: linear-gradient(90deg, #f4a261, #ffd166);
-      transform: scale(1.05);
+      background-color: #e6c200;
     }
 
-    .note-list {
-      width: 100%;
-      max-width: 650px;
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
     }
 
-    .note {
-      background-color: #ffffffcc;
-      border: 1px solid #a8dadc;
-      border-radius: 12px;
-      padding: 14px 18px;
-      margin-bottom: 12px;
+    li {
+      background-color: #ffffff;
+      padding: 12px;
+      margin: 8px auto;
+      width: 280px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 3px 7px rgba(0,0,0,0.07);
-      direction: rtl;
-      transition: background-color 0.3s, color 0.3s, text-decoration 0.3s;
-      color: #264653;
+      font-size: 16px;
     }
 
-    .note.done {
-      background-color: #fff9c4;
-      text-decoration: line-through;
-      color: #555;
-      border-color: #ffd166;
-      box-shadow: 0 3px 10px rgba(255, 209, 55, 0.3);
-    }
-
-    .note-info {
-      flex-grow: 1;
-      margin-right: 12px;
-      text-align: right;
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .note-date {
-      font-size: 12px;
-      color: #666;
-      margin-top: 4px;
-      text-align: right;
-      font-weight: 400;
-    }
-
-    .actions button {
-      background: transparent;
-      border: none;
+    .flower {
+      font-size: 22px;
       cursor: pointer;
-      font-size: 22px;
-      margin-left: 14px;
-      color: #264653cc;
-      transition: color 0.3s;
-      padding: 0;
-      user-select: none;
     }
 
-    .actions button:hover {
-      color: #264653;
+    .flower.completed {
+      color: #4caf50;
     }
-
-    #heartContainer {
-      margin: 20px 0 30px;
-      width: 90px;
-      height: 90px;
-      position: relative;
-      cursor: default;
-      user-select: none;
-      direction: ltr;
-    }
-
-    #progressText {
-      font-weight: 700;
-      font-size: 22px;
-      text-align: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #b37300; /* ذهبي داكن */
-      user-select: none;
-      pointer-events: none;
-    }
-
-    #heartPath {
-      fill: #ffd166; /* أصفر ذهبي */
-      stroke: none;
-      transition: fill 0.4s ease, filter 0.4s ease;
-      filter: drop-shadow(0 0 3px rgba(255, 209, 102, 0.8));
-      transform-origin: center center;
-    }
-
-    #heartContainer.animate {
-      animation: heartbeat 1s ease-in-out infinite;
-    }
-
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-    }
-
-    .floating-heart {
-      position: fixed;
-      width: 24px;
-      height: 24px;
-      pointer-events: none;
-      animation: floatUp 2s forwards ease-out;
-      z-index: 1000;
-    }
-
-    .floating-heart svg path {
-      fill: #ffd166;
-    }
-
-    @keyframes floatUp {
-      0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-100px) scale(1.5);
-      }
-    }
-
   </style>
 </head>
 <body>
 
   <h1>مهامي اليومية</h1>
 
-  <div id="heartContainer" title="التقدم">
-    <svg viewBox="0 0 24 24" width="90" height="90" xmlns="http://www.w3.org/2000/svg">
-      <path id="heartPath" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
-        2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
-        C13.09 3.81 14.76 3 16.5 3
-        19.58 3 22 5.42 22 8.5
-        c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-    </svg>
-    <div id="progressText">0%</div>
-  </div>
+  <input type="text" id="taskInput" placeholder="أدخل مهمتك هنا">
+  <button onclick="addTask()">إضافة المهمة</button>
 
-  <div class="input-container">
-    <input type="text" id="noteText" placeholder="اكتب مهمتك..." />
-    <input type="date" id="noteDate" />
-    <button onclick="addNote()">إضافة</button>
-  </div>
+  <ul id="taskList"></ul>
 
-  <div class="note-list" id="noteList"></div>
+  <script src="script.js"></script>
 
-  <audio id="dingSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3" preload="auto"></audio>
-
-  <script>
-    let notes = JSON.parse(localStorage.getItem("notes")) || [];
-
-    const encouragements = [
-      "عمل رائع! 🌟",
-      "أحسنت! 👏",
-      "ممتاز! المهمة اكتملت 💪",
-      "عمل جميل! 🎯",
-      "تمت المهمة بنجاح ✅"
-    ];
-
-    function saveNotes() {
-      localStorage.setItem("notes", JSON.stringify(notes));
-    }
-
-    function updateHeartProgress() {
-      const heartPath = document.getElementById("heartPath");
-      const progressText = document.getElementById("progressText");
-      const heartContainer = document.getElementById("heartContainer");
-
-      const total = notes.length;
-      const done = notes.filter(n => n.done).length;
-
-      const unit = 4;
-      let progress = done / unit;
-      if (progress > 1) progress = 1;
-      const percent = Math.round(progress * 100);
-
-      progressText.textContent = `${percent}%`;
-
-      if (percent === 100) {
-        heartPath.style.fill = '#fff9c4';
-        heartPath.style.filter = 'drop-shadow(0 0 6px rgba(255, 235, 59, 0.8))';
-        heartContainer.classList.add("animate");
-        playDing();
-        launchFloatingHearts();
-      } else if (done > 0) {
-        heartPath.style.fill = '#ffd166';
-        heartPath.style.filter = 'drop-shadow(0 0 4px rgba(255, 209, 102, 0.6))';
-        heartContainer.classList.remove("animate");
-      } else {
-        heartPath.style.fill = '#ffd166';
-        heartPath.style.filter = 'drop-shadow(0 0 2px rgba(255, 209, 102, 0.4))';
-        heartContainer.classList.remove("animate");
-      }
-    }
-
-    function renderNotes() {
-      const noteList = document.getElementById("noteList");
-      noteList.innerHTML = "";
-
-      notes.forEach((note, index) => {
-        const noteElement = document.createElement("div");
-        noteElement.className = "note" + (note.done ? " done" : "");
-
-        const noteInfo = document.createElement("div");
-        noteInfo.className = "note-info";
-        noteInfo.textContent = note.text;
-
-        const noteDate = document.createElement("div");
-        noteDate.className = "note-date";
-        noteDate.textContent = note.date ? `تاريخ التنفيذ: ${note.date}` : "";
-
-        noteInfo.appendChild(noteDate);
-
-        const actions = document.createElement("div");
-        actions.className = "actions";
-
-        const doneBtn = document.createElement("button");
-        doneBtn.innerHTML = note.done ? "✅" : "⬜";
-        doneBtn.title = "تبديل حالة الإنجاز";
-        doneBtn.onclick = () => toggleDone(index);
-
-        const deleteBtn = document.createElement("button");
-        deleteBtn.innerHTML = "🗑️";
-        deleteBtn.title = "حذف المهمة";
-        deleteBtn.onclick = () => deleteNote(index);
-
-        actions.appendChild(doneBtn);
-        actions.appendChild(deleteBtn);
-
-        noteElement.appendChild(actions);
-        noteElement.appendChild(noteInfo);
-
-        noteList.appendChild(noteElement);
-      });
-
-      updateHeartProgress();
-    }
-
-    function addNote() {
-      const noteTextInput = document.getElementById("noteText");
-      const noteDateInput = document.getElementById("noteDate");
-      const text = noteTextInput.value.trim();
-      const date = noteDateInput.value;
-
-      if (!text) {
-        alert("يرجى كتابة المهمة!");
-        return;
-      }
-
-      notes.push({ text, date, done: false });
-      saveNotes();
-      renderNotes();
-
-      noteTextInput.value = "";
-      noteDateInput.value = "";
-
-      updateHeartProgress();
-    }
-
-    function toggleDone(index) {
-      notes[index].done = !notes[index].done;
-      saveNotes();
-      renderNotes();
-      updateHeartProgress();
-
-      if (notes[index].done && getProgressPercent() === 100) {
-        alert(encouragements[Math.floor(Math.random() * encouragements.length)]);
-      }
-    }
-
-    function deleteNote(index) {
-      if (confirm("هل أنت متأكد من حذف هذه المهمة؟")) {
-        notes.splice(index, 1);
-        saveNotes();
-        renderNotes();
-        updateHeartProgress();
-      }
-    }
-
-    function getProgressPercent() {
-      const done = notes.filter(n => n.done).length;
-      const unit = 4;
-      let progress = done / unit;
-      if (progress > 1) progress = 1;
-      return Math.round(progress * 100);
-    }
-
-    function playDing() {
-      const dingSound = document.getElementById("dingSound");
-      dingSound.play();
-    }
-
-    function launchFloatingHearts() {
-      for (let i = 0; i < 15; i++) {
-        setTimeout(() => {
-          createFloatingHeart();
-        }, i * 150);
-      }
-    }
-
-    function createFloatingHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("floating-heart");
-      heart.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="#ffd166" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
-                   2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
-                   C13.09 3.81 14.76 3 16.5 3
-                   19.58 3 22 5.42 22 8.5
-                   c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>`;
-      heart.style.left = (window.innerWidth / 2 - 12 + (Math.random() * 100 - 50)) + "px";
-      heart.style.top = (window.innerHeight / 2 +
+</body>
+</html>
