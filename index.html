@@ -133,23 +133,27 @@
     }
   });
 </script>
-    const loginForm = document.getElementById('loginForm');
-    const errorMsg = document.getElementById('errorMsg');
+    <script>
+  const loginForm = document.getElementById('loginForm');
+  const errorMsg = document.getElementById('errorMsg');
 
-    loginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-      const validUser = 'manal';
-      const validPass = '12345';
+    const validUser = 'manal';
+    const validPass = '12345';
 
-      if(username === validUser && password === validPass) {
-        errorMsg.textContent = '';
-        window.location.href = 'main.html';
-      } else {
-        errorMsg.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة';
+    if (username === validUser && password === validPass) {
+      errorMsg.textContent = ''; // حذف رسالة الخطأ إن وُجدت
+      window.location.href = 'main.html';
+    } else {
+      errorMsg.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة';
+    }
+  });
+</script>
       }
     });
   </script>
