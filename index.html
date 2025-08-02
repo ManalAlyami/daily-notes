@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>تسجيل الدخول - مذاكرت منال</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #f0faff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: normal;
+      margin-bottom: 20px;
+      user-select: none;
+    }
+    input, button {
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 220px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #ffd700;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e6c200;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>مرحبا بك في منصة مهامك</h1>
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="اسم المستخدم" required /><br />
+    <input type="password" id="password" placeholder="كلمة المرور" required /><br />
+    <button type="submit">تسجيل الدخول</button>
+    <div id="errorMsg" class="error"></div>
+  </form>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      // بيانات وهمية للتحقق
+      const validUser = 'manal';
+      const validPass = '12345';
+
+      if(username === validUser && password === validPass) {
+        // تسجيل دخول ناجح
+        errorMsg.textContent = '';
+        // الانتقال لصفحة المهام
+        window.location.href = 'main.html';
+      } else {
+        errorMsg.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+      }
+    });
+  </script>
+</body>
+</html>
