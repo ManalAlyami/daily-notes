@@ -107,46 +107,26 @@
     </div>
   </div>
 
-  <script><script>
-  document.querySelector('.add-btn').addEventListener('click', function () {
-    const taskTitle = prompt("اكتبي عنوان المهمة:");
-    const taskDesc = prompt("اكتبي وصف المهمة:");
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
 
-    if (taskTitle && taskDesc) {
-      const container = document.querySelector('.container');
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
 
-      const taskBox = document.createElement('div');
-      taskBox.className = 'task-box';
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
 
-      const titleEl = document.createElement('div');
-      titleEl.className = 'task-title';
-      titleEl.textContent = taskTitle;
+      const validUser = 'manal';
+      const validPass = '12345';
 
-      const descEl = document.createElement('div');
-      descEl.className = 'task-desc';
-      descEl.textContent = taskDesc;
-
-      taskBox.appendChild(titleEl);
-      taskBox.appendChild(descEl);
-
-      container.appendChild(taskBox);
-    }
-  const loginForm = document.getElementById('loginForm');
-  const errorMsg = document.getElementById('errorMsg');
-
-  loginForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
-
-    const validUser = 'manal';
-    const validPass = '12345';
-
-    if (username === validUser && password === validPass) {
-      errorMsg.textContent = ''; // حذف رسالة الخطأ إن وُجدت
-      window.location.href = 'main.html';
-    } else {
-      errorMsg.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة';
+      if (username === validUser && password === validPass) {
+        errorMsg.textContent = '';
+        window.location.href = 'main.html';  // توجه لصفحة المهام بعد تسجيل الدخول
+      } else {
+        errorMsg.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة';
+      }
+    });
+  </script>
 </body>
 </html>
