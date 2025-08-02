@@ -1,67 +1,84 @@
-Lbody {
+body {
   font-family: 'Cairo', sans-serif;
-  background: #f9f9fb;
+  background-color: #fff8f0;
+  color: #333;
   margin: 0;
   padding: 0;
-  direction: rtl;
-  color: #333;
 }
 
 .container {
   max-width: 600px;
-  margin: auto;
+  margin: 40px auto;
   padding: 20px;
-  text-align: center;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.05);
 }
 
 h1 {
-  color: #4682B4;
+  text-align: center;
+  color: #ff9f9f;
   margin-bottom: 30px;
 }
 
-.input-section {
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
 input, button {
+  font-family: inherit;
   padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin: 5px 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-button {
-  background-color: #add8e6;
+#addTaskBtn {
+  background-color: #ffb6b9;
+  color: white;
   border: none;
-  color: #333;
+  font-weight: bold;
+  transition: background-color 0.3s;
   cursor: pointer;
-  transition: 0.3s;
 }
 
-button:hover {
-  background-color: #87ceeb;
+#addTaskBtn:hover {
+  background-color: #ff9f9f;
 }
 
 .task-box {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  background-color: #fff0f5;
+  border: 1px solid #fcd9e2;
+  border-radius: 10px;
   padding: 15px;
-  margin-bottom: 10px;
+  margin-top: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background-color 0.3s;
 }
 
 .task-box.done {
-  background-color: #e6ffe6;
+  background-color: #d7fada;
+  border-color: #c1eac5;
+  text-decoration: line-through;
+  opacity: 0.8;
 }
 
 .task-date {
-  font-size: 14px;
+  font-size: 0.8em;
   color: #888;
   margin-top: 5px;
+}
+
+button {
+  margin-left: 5px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #eee;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #ddd;
 }
