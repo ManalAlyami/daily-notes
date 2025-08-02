@@ -1,6 +1,6 @@
 body {
   font-family: 'Cairo', sans-serif;
-  background: linear-gradient(to right, #f0f8ff, #ffffff);
+  background: #fdf9f4;
   color: #333;
   margin: 0;
   padding: 0;
@@ -9,76 +9,87 @@ body {
 
 .container {
   max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #fffdfa;
+  margin: 50px auto;
+  background: #ffffff;
+  padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 h1 {
-  text-align: center;
-  color: #444;
+  color: #d4af37; /* ذهبي */
+  margin-bottom: 20px;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 20px;
 }
 
-.input-group input,
-.input-group button {
+input[type="text"],
+input[type="datetime-local"] {
   padding: 12px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 8px;
 }
 
-.input-group button {
-  background-color: #f7c948;
+button {
+  padding: 10px;
+  background-color: #d4af37;
   color: white;
   font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
   border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.input-group button:hover {
-  background-color: #e0a800;
+button:hover {
+  background-color: #b8962e;
 }
 
 .task-box {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background: #f8f5ef;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 15px;
+  text-align: right;
+  position: relative;
 }
 
 .task-box.done {
+  opacity: 0.6;
   text-decoration: line-through;
-  background-color: #e6ffe6;
 }
 
 .task-date {
   font-size: 12px;
-  color: #888;
+  color: #999;
   margin-top: 5px;
+}
+
+.task-box button {
+  margin-left: 8px;
+  background: transparent;
+  font-size: 18px;
 }
 
 .footer {
   text-align: center;
-  margin-top: 30px;
-  font-size: 14px;
-  color: #aaa;
+  margin-top: 40px;
+  color: #d4af37;
 }
 
-.heart {
-  color: gold;
-  font-size: 20px;
+.footer .quote {
+  font-size: 14px;
+}
+
+.flower-icon {
+  font-size: 28px;
+  margin-top: 10px;
+  color: #d4af37;
 }
