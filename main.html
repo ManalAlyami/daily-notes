@@ -23,124 +23,273 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
+    .input-area {
+      max-width: 500px;
+      margin: 20px auto;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .input-area input[type="text"] {
+      flex: 2;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1.5px solid #a8dadc;
+      font-size: 16px;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .input-area input[type="date"] {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1.5px solid #a8dadc;
+      font-size: 16px;
+      font-family: 'Tajawal', sans-serif;
+      cursor: pointer;
+    }
+
+    .input-area button {
+      flex: 1;
+      background: linear-gradient(90deg, #ffd166, #f4a261);
+      border: none;
+      border-radius: 10px;
+      padding: 12px 0;
+      color: #264653;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .input-area button:hover {
+      background: linear-gradient(90deg, #f4a261, #ffd166);
+    }
+
     .container {
-      padding: 30px;
+      max-width: 600px;
+      margin: 20px auto 50px auto;
+      padding: 0 10px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      gap: 15px;
     }
 
     .task-box {
       background-color: #ffffff;
       border-radius: 15px;
-      padding: 20px;
+      padding: 15px 20px;
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       transition: transform 0.2s;
-      position: relative;
+    }
+
+    .task-box.done .task-title {
+      text-decoration: line-through;
+      color: #888;
     }
 
     .task-box:hover {
-      transform: translateY(-5px);
+      transform: translateY(-3px);
+    }
+
+    .task-info {
+      display: flex;
+      flex-direction: column;
     }
 
     .task-title {
       font-size: 20px;
       font-weight: bold;
       color: #1d3557;
-      margin-bottom: 6px;
     }
 
     .task-date {
-      font-size: 12px;
+      font-size: 14px;
       color: #888;
-      font-family: 'Tajawal', sans-serif;
-      text-align: left;
+      margin-top: 3px;
     }
 
-    .add-btn {
-      background: linear-gradient(90deg, #ffd166, #f4a261);
+    .task-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .task-actions button {
+      background: none;
       border: none;
-      border-radius: 10px;
-      padding: 12px 20px;
-      color: #264653;
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 22px;
       cursor: pointer;
-      margin: 30px auto 50px;
-      display: block;
-      transition: background 0.3s ease;
-      width: 180px;
+      transition: color 0.3s ease;
     }
 
-    .add-btn:hover {
-      background: linear-gradient(90deg, #f4a261, #ffd166);
+    .task-actions button.check-btn {
+      color: #ffd166;
+    }
+
+    .task-actions button.check-btn.done {
+      color: #4caf50; /* أخضر لما تتم المهمة */
+    }
+
+    .task-actions button.delete-btn {
+      color: #e63946;
+    }
+
+    .task-actions button:hover {
+      opacity: 0.7;
     }
   </style>
 </head>
 <body>
+
   <header>مهامي اليومية</header>
 
-  <div class="container"></div>
+  <div class="input-area">
+    <input type="text" id="taskInput" placeholder="أدخل عنوان المهمة" />
+    <input type="date" id="taskDate" />
+    <button id="addTaskBtn">إضافة مهمة</button>
+  </div>
 
-  <button class="add-btn">إضافة مهمة جديدة</button>
+  <div class="container" id="taskList">
+    <!-- المهام تظهر هنا -->
+  </div>
 
-  <script>
-    const container = document.querySelector('.container');
-    const addBtn = document.querySelector('.add-btn');
+<script>
+  const taskInput = document.getElementById('taskInput');
+  const taskDate = document.getElementById('taskDate');
+  const addTaskBtn = document.getElementById('addTaskBtn');
+  const taskList = document.getElementById('taskList');
 
-    addBtn.addEventListener('click', function () {
-      const taskTitle = prompt("اكتبي عنوان المهمة:");
-      const taskDateInput = prompt("اكتبي تاريخ ووقت المهمة بصيغة: YYYY-MM-DD HH:MM");
+  // جلب المهام من localStorage أو مصفوفة فارغة
+  let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
 
-      if (!taskTitle || !taskDateInput) {
-        alert("يجب إدخال عنوان المهمة والتاريخ مع الوقت");
-        return;
-      }
+  // دالة عرض المهام
+  function displayTasks() {
+    taskList.innerHTML = '';
 
-      // تحويل النص إلى تاريخ JS
-      const taskDate = new Date(taskDateInput.replace(' ', 'T'));
-      if (isNaN(taskDate)) {
-        alert('صيغة التاريخ غير صحيحة. استخدمي الصيغة: YYYY-MM-DD HH:MM');
-        return;
-      }
-
-      // إنشاء مهمة جديدة
+    tasks.forEach((task, index) => {
       const taskBox = document.createElement('div');
       taskBox.className = 'task-box';
+      if(task.done) taskBox.classList.add('done');
+
+      const taskInfo = document.createElement('div');
+      taskInfo.className = 'task-info';
 
       const titleEl = document.createElement('div');
       titleEl.className = 'task-title';
-      titleEl.textContent = taskTitle;
+      titleEl.textContent = task.text;
 
       const dateEl = document.createElement('div');
       dateEl.className = 'task-date';
-      dateEl.textContent = taskDate.toLocaleString('ar-SA', {
-        year: 'numeric', month: 'short', day: 'numeric',
-        hour: '2-digit', minute: '2-digit'
-      });
+      dateEl.textContent = formatDate(task.date);
 
-      taskBox.appendChild(titleEl);
-      taskBox.appendChild(dateEl);
+      taskInfo.appendChild(titleEl);
+      taskInfo.appendChild(dateEl);
 
-      container.appendChild(taskBox);
+      // أزرار الحالة والحذف
+      const actions = document.createElement('div');
+      actions.className = 'task-actions';
 
-      // طلب إذن الإشعارات إن لم يُعطى بعد
-      if (Notification.permission !== "granted") {
-        Notification.requestPermission();
-      }
+      const checkBtn = document.createElement('button');
+      checkBtn.className = 'check-btn';
+      checkBtn.innerHTML = '✔️';
+      if(task.done) checkBtn.classList.add('done');
+      checkBtn.onclick = () => {
+        tasks[index].done = !tasks[index].done;
+        saveTasks();
+        displayTasks();
+      };
 
-      // مؤقت التذكير
-      const intervalId = setInterval(() => {
-        const now = new Date();
-        const diff = taskDate - now;
-        if (diff <= 0) {
-          if (Notification.permission === "granted") {
-            new Notification("📌 تذكير بمهمتك:", { body: taskTitle });
-          }
-          clearInterval(intervalId);
-        }
-      }, 60000);
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'delete-btn';
+      deleteBtn.innerHTML = '🗑️';
+      deleteBtn.onclick = () => {
+        tasks.splice(index, 1);
+        saveTasks();
+        displayTasks();
+      };
+
+      actions.appendChild(checkBtn);
+      actions.appendChild(deleteBtn);
+
+      taskBox.appendChild(taskInfo);
+      taskBox.appendChild(actions);
+
+      taskList.appendChild(taskBox);
     });
-  </script>
+  }
+
+  // دالة حفظ المهام في localStorage
+  function saveTasks() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+
+  // تنسيق التاريخ (عربي، يوم/شهر/سنة)
+  function formatDate(dateStr) {
+    if(!dateStr) return '';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('ar-SA');
+  }
+
+  // حدث زر الإضافة
+  addTaskBtn.addEventListener('click', () => {
+    const text = taskInput.value.trim();
+    const date = taskDate.value;
+
+    if(!text) {
+      alert('يرجى كتابة عنوان المهمة');
+      return;
+    }
+    if(!date) {
+      alert('يرجى اختيار تاريخ للمهمة');
+      return;
+    }
+
+    tasks.push({text, date, done: false});
+    saveTasks();
+    displayTasks();
+
+    taskInput.value = '';
+    taskDate.value = '';
+  });
+
+  // عرض المهام أول مرة
+  displayTasks();
+
+  // -- إشعار تذكير عند موعد المهمة --
+  function checkReminders() {
+    const now = new Date().setHours(0,0,0,0); // بداية اليوم الحالي
+    tasks.forEach((task, idx) => {
+      if(!task.notified) {
+        const taskTime = new Date(task.date).setHours(0,0,0,0);
+        if(taskTime === now) {
+          showNotification(`📌 لديك مهمة اليوم: ${task.text}`);
+          tasks[idx].notified = true;
+          saveTasks();
+        }
+      }
+    });
+  }
+
+  function showNotification(msg) {
+    if(Notification.permission === "granted") {
+      new Notification(msg);
+    } else if(Notification.permission !== "denied") {
+      Notification.requestPermission().then(permission => {
+        if(permission === "granted") {
+          new Notification(msg);
+        }
+      });
+    }
+  }
+
+  setInterval(checkReminders, 60 * 1000); // كل دقيقة يتحقق من المهام
+
+</script>
+
 </body>
 </html>
