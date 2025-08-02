@@ -26,14 +26,8 @@
 
     h1 {
       font-size: 26px;
-      margin-bottom: 15px;
+      margin-bottom: 25px;
       color: #1d3557;
-    }
-
-    p.motivation {
-      font-size: 14px;
-      color: #457b9d;
-      margin-bottom: 30px;
     }
 
     input {
@@ -95,34 +89,16 @@
       color: #1d3557;
       text-decoration: underline;
     }
-
-    .flower-icon {
-      font-size: 22px;
-      color: #ffd166;
-      animation: bloom 1.2s ease forwards;
-    }
-
-    @keyframes bloom {
-      0% {
-        transform: scale(0.6);
-        opacity: 0.5;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="login-box">
     <h1>تسجيل الدخول إلى منصة مذاكرتك</h1>
-    <p class="motivation">ابدأي يومك بطاقة إيجابية 🌼</p>
     <form id="loginForm">
       <input type="text" id="username" placeholder="اسم المستخدم" required />
       <input type="password" id="password" placeholder="كلمة المرور" required />
       <button type="submit">
-        دخول <span class="flower-icon">🌼</span>
+        دخول
       </button>
       <div id="errorMsg" class="error"></div>
     </form>
