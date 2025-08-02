@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>مهامي اليومية</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>✨ مهامي اليومية</h1>
-
-    <div class="input-group">
-      <input type="text" id="taskInput" placeholder="اكتب المهمة هنا">
-      <input type="datetime-local" id="reminderTime">
-      <button id="addTaskBtn">➕ إضافة</button>
+    <h1>مهامي اليومية</h1>
+    
+    <div class="input-section">
+      <input type="text" id="taskInput" placeholder="أدخل المهمة" />
+      <input type="datetime-local" id="reminderTime" />
+      <button id="addTaskBtn">إضافة</button>
     </div>
 
-    <div id="taskList"></div>
-
-    <div class="footer">
-      <span class="quote">كل إنجاز صغير يصنع فرقًا كبيرًا 💛</span>
-    </div>
+    <div id="taskList" class="task-list"></div>
   </div>
 
   <script src="script.js"></script>
