@@ -2,39 +2,94 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <title>منصة الملاحظات اليومية - منال اليامي</title>
+  <title>تسجيل الدخول - مذاكرت منال</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
   <style>
     body {
+      background-color: #f5f7fa;
       font-family: 'Tajawal', sans-serif;
-      background-color: #f9f9f9;
-      color: #333333;
-      margin: 40px;
-      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
     }
+
+    .login-box {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 320px;
+      text-align: center;
+    }
+
     h1 {
+      font-size: 24px;
+      margin-bottom: 25px;
       color: #2c3e50;
-      font-weight: 700;
-      margin-bottom: 20px;
     }
-    p {
-      font-size: 18px;
-      margin-bottom: 15px;
+
+    input, button {
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 100%;
+      font-size: 16px;
     }
-    hr {
+
+    button {
+      background-color: #ffd700;
       border: none;
-      border-top: 1px solid #cccccc;
-      margin: 30px 0;
+      font-weight: bold;
+      color: #333;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e6c200;
+    }
+
+    .error {
+      color: #c0392b;
+      margin-top: 12px;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <h1>مرحبًا بكم في منصة الملاحظات اليومية</h1>
-  <p>هذه المنصة مخصصة لتدوين وتنظيم الملاحظات اليومية بطريقة سهلة ومنظمة.</p>
-  <p>يهدف الموقع إلى مساعدتك على متابعة أفكارك ومهامك بشكل احترافي ومنسق.</p>
-  <hr />
-  <p>طورت هذا الموقع منال اليامي.</p>
+  <div class="login-box">
+    <h1>تسجيل الدخول إلى منصة مذاكرتك</h1>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="اسم المستخدم" required />
+      <input type="password" id="password" placeholder="كلمة المرور" required />
+      <button type="submit">دخول</button>
+      <div id="errorMsg" class="error"></div>
+    </form>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      const validUser = 'manal';
+      const validPass = '12345';
+
+      if(username === validUser && password === validPass) {
+        errorMsg.textContent = '';
+        window.location.href = 'main.html';
+      } else {
+        errorMsg.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة';
+      }
+    });
+  </script>
 </body>
 </html>
-
-      
