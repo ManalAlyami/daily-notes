@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>مهامي اليومية</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>مهامي اليومية ✨</h1>
+    <h1>🌟 مهامي اليومية</h1>
+    
+    <div class="input-group">
+      <input type="text" id="taskInput" placeholder="اكتب المهمة هنا">
+      <input type="datetime-local" id="reminderTime">
+      <button id="addTaskBtn">➕ إضافة</button>
+    </div>
 
-    <input type="text" id="taskInput" placeholder="اكتبي مهمتك هنا" />
-    <input type="date" id="dateInput" />
-    <button id="addTaskBtn">إضافة المهمة</button>
-
-    <div id="tasksList"></div>
-
-    <div class="footer-icon">
-      <img src="https://cdn-icons-png.flaticon.com/512/765/765408.png" alt="وردة ذهبية" class="golden-flower">
+    <div id="taskList"></div>
+    
+    <div class="footer">
+      <span class="heart">💛</span> منال
     </div>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
