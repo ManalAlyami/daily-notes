@@ -107,7 +107,32 @@
     </div>
   </div>
 
-  <script>
+  <script><script>
+  document.querySelector('.add-btn').addEventListener('click', function () {
+    const taskTitle = prompt("اكتبي عنوان المهمة:");
+    const taskDesc = prompt("اكتبي وصف المهمة:");
+
+    if (taskTitle && taskDesc) {
+      const container = document.querySelector('.container');
+
+      const taskBox = document.createElement('div');
+      taskBox.className = 'task-box';
+
+      const titleEl = document.createElement('div');
+      titleEl.className = 'task-title';
+      titleEl.textContent = taskTitle;
+
+      const descEl = document.createElement('div');
+      descEl.className = 'task-desc';
+      descEl.textContent = taskDesc;
+
+      taskBox.appendChild(titleEl);
+      taskBox.appendChild(descEl);
+
+      container.appendChild(taskBox);
+    }
+  });
+</script>
     const loginForm = document.getElementById('loginForm');
     const errorMsg = document.getElementById('errorMsg');
 
