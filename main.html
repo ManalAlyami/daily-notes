@@ -36,22 +36,43 @@
       padding: 20px;
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
     }
 
-    .task-box:hover {
-      transform: translateY(-5px);
+    .task-box.done {
+      text-decoration: line-through;
+      opacity: 0.6;
     }
 
     .task-title {
       font-size: 20px;
       font-weight: bold;
       color: #1d3557;
-      margin-bottom: 10px;
+      margin-bottom: 0;
+      display: inline-block;
     }
 
-    .task-desc {
-      font-size: 16px;
-      color: #555;
+    .task-actions {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .task-actions button {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #264653;
+      transition: color 0.3s ease;
+    }
+
+    .task-actions button:hover {
+      color: #f4a261;
     }
 
     .add-btn {
@@ -123,16 +144,17 @@
     .modal-content h3 {
       margin-top: 0;
       color: #1d3557;
+      text-align: center;
     }
 
-    .modal-content input,
-    .modal-content textarea {
+    .modal-content input {
       width: 100%;
       margin-bottom: 10px;
       padding: 10px;
       font-family: 'Tajawal', sans-serif;
       border: 1px solid #ccc;
       border-radius: 10px;
+      font-size: 16px;
     }
 
     .modal-content button {
@@ -143,17 +165,23 @@
       font-weight: bold;
       color: #264653;
       cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .modal-content button:hover {
+      background: linear-gradient(90deg, #f4a261, #ffd166);
     }
   </style>
 </head>
 <body>
   <header>مهامي اليومية</header>
 
-  <div class="container">
-    <!-- لا مهام أولية -->
+  <div class="container" id="taskContainer">
+    <!-- مهام تظهر هنا -->
   </div>
 
-  <button class="add-btn">إضافة مهمة جديدة</button>
+  <button class="add-btn" id="openModalBtn">إضافة مهمة جديدة</button>
 
   <div class="calendar">
     <h3>تقويم المهام</h3>
@@ -165,18 +193,22 @@
     <div class="modal-content">
       <h3>أضف مهمة جديدة</h3>
       <input type="text" id="taskTitle" placeholder="عنوان المهمة" />
-      <textarea id="taskDesc" placeholder="وصف المهمة"></textarea>
-      <button onclick="addTask()">إضافة</button>
+      <button id="addTaskBtn">إضافة</button>
     </div>
   </div>
 
   <script>
-    const addBtn = document.querySelector('.add-btn');
+    const openModalBtn = document.getElementById('openModalBtn');
     const modal = document.getElementById('taskModal');
-    const container = document.querySelector('.container');
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const taskContainer = document.getElementById('taskContainer');
+    const taskTitleInput = document.getElementById('taskTitle');
 
-    addBtn.addEventListener('click', () => {
+    // فتح وإغلاق النافذة المنبثقة
+    openModalBtn.addEventListener('click', () => {
       modal.style.display = 'flex';
+      taskTitleInput.value = '';
+      taskTitleInput.focus();
     });
 
     window.addEventListener('click', (e) => {
@@ -185,32 +217,53 @@
       }
     });
 
-    function addTask() {
-      const title = document.getElementById('taskTitle').value.trim();
-      const desc = document.getElementById('taskDesc').value.trim();
-
-      if (title && desc) {
-        const taskBox = document.createElement('div');
-        taskBox.classList.add('task-box');
-
-        const taskTitle = document.createElement('div');
-        taskTitle.classList.add('task-title');
-        taskTitle.textContent = title;
-
-        const taskDesc = document.createElement('div');
-        taskDesc.classList.add('task-desc');
-        taskDesc.textContent = desc;
-
-        taskBox.appendChild(taskTitle);
-        taskBox.appendChild(taskDesc);
-        container.appendChild(taskBox);
-
-        // إغلاق النافذة وتفريغ الحقول
-        modal.style.display = 'none';
-        document.getElementById('taskTitle').value = '';
-        document.getElementById('taskDesc').value = '';
+    // إضافة مهمة جديدة
+    addTaskBtn.addEventListener('click', () => {
+      const title = taskTitleInput.value.trim();
+      if (!title) {
+        alert('يرجى إدخال عنوان المهمة');
+        return;
       }
-    }
+
+      const taskBox = document.createElement('div');
+      taskBox.classList.add('task-box');
+
+      const taskTitle = document.createElement('div');
+      taskTitle.classList.add('task-title');
+      taskTitle.textContent = title;
+
+      // أزرار الإجراءات
+      const actionsDiv = document.createElement('div');
+      actionsDiv.classList.add('task-actions');
+
+      // زر صح
+      const doneBtn = document.createElement('button');
+      doneBtn.innerHTML = '✔️';
+      doneBtn.title = 'إنهاء المهمة';
+      doneBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        taskBox.classList.toggle('done');
+      });
+
+      // زر حذف
+      const deleteBtn = document.createElement('button');
+      deleteBtn.innerHTML = '🗑️';
+      deleteBtn.title = 'حذف المهمة';
+      deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        taskContainer.removeChild(taskBox);
+      });
+
+      actionsDiv.appendChild(doneBtn);
+      actionsDiv.appendChild(deleteBtn);
+
+      taskBox.appendChild(taskTitle);
+      taskBox.appendChild(actionsDiv);
+
+      taskContainer.appendChild(taskBox);
+
+      modal.style.display = 'none';
+    });
   </script>
 </body>
 </html>
