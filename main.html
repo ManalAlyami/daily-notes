@@ -71,6 +71,31 @@
     .add-btn:hover {
       background: linear-gradient(90deg, #f4a261, #ffd166);
     }
+
+    /* تقويم */
+    .calendar {
+      margin: 40px auto;
+      max-width: 500px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .calendar h3 {
+      margin-top: 0;
+      color: #1d3557;
+      text-align: center;
+    }
+
+    .calendar input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-family: 'Tajawal', sans-serif;
+    }
   </style>
 </head>
 <body>
@@ -94,5 +119,10 @@
   </div>
 
   <button class="add-btn">إضافة مهمة جديدة</button>
+
+  <div class="calendar">
+    <h3>تقويم المهام</h3>
+    <input type="date" />
+  </div>
 </body>
 </html>
