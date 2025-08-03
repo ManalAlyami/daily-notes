@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <title>تسجيل الدخول - مذاكرت منال</title>
+  <title>منصة مذاكرتك - ابدأ الآن</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -15,7 +15,7 @@
       margin: 0;
     }
 
-    .login-box {
+    .start-box {
       background-color: #ffffff;
       padding: 40px 35px;
       border-radius: 15px;
@@ -58,10 +58,6 @@
       cursor: pointer;
       transition: background 0.3s ease;
       margin-top: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
     }
 
     button:hover {
@@ -73,58 +69,30 @@
       margin-top: 12px;
       font-size: 14px;
     }
-
-    .forgot-password {
-      margin-top: 15px;
-      font-size: 14px;
-    }
-
-    .forgot-password a {
-      color: #457b9d;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .forgot-password a:hover {
-      color: #1d3557;
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h1>تسجيل الدخول إلى منصة مذاكرتك</h1>
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="اسم المستخدم" required />
-      <input type="password" id="password" placeholder="كلمة المرور" required />
-      <button type="submit">دخول</button>
-      <div id="errorMsg" class="error"></div>
-    </form>
-    <div class="forgot-password">
-      <a href="#">نسيت كلمة المرور؟</a>
-    </div>
+  <div class="start-box">
+    <h1>مرحبًا بك في منصة مذاكرتك 💡</h1>
+    <input type="text" id="username" placeholder="اكتب اسمك هنا" required />
+    <button onclick="startNow()">ابدأ الآن</button>
+    <div id="errorMsg" class="error"></div>
   </div>
 
   <script>
-    const loginForm = document.getElementById('loginForm');
-    const errorMsg = document.getElementById('errorMsg');
-
-    loginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-
+    function startNow() {
       const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
+      const errorMsg = document.getElementById('errorMsg');
 
-      const validUser = 'manal';
-      const validPass = '12345';
-
-      if (username === validUser && password === validPass) {
-        errorMsg.textContent = ''; // حذف رسالة الخطأ إن وُجدت
-        window.location.href = 'main.html';
+      if (username === '') {
+        errorMsg.textContent = '❌ الرجاء إدخال الاسم أولاً';
       } else {
-        errorMsg.textContent = '❌ اسم المستخدم أو كلمة المرور غير صحيحة';
+        errorMsg.textContent = '';
+        // تقدر تحفظ الاسم في localStorage لو تبين تظهرينه في الصفحة التالية
+        localStorage.setItem('username', username);
+        window.location.href = 'main.html';
       }
-    });
+    }
   </script>
 </body>
 </html>
